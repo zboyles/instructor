@@ -1,6 +1,6 @@
 from pydantic import BaseModel, create_model, Field
 from typing import Optional, List, Type, Union
-from openai_function_call import OpenAISchema
+from .. import OpenAISchema
 
 
 class MultiTaskBase:
