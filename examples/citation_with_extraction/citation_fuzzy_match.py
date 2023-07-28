@@ -3,7 +3,7 @@ from typing import List
 import openai
 from pydantic import Field, BaseModel
 
-from openai_function_call import OpenAISchema
+from instructor import OpenAISchema
 
 
 class Fact(BaseModel):
@@ -19,7 +19,7 @@ class Fact(BaseModel):
         description="Each source should be a direct quote from the context, as a substring of the original content",
     )
 
-    def _get_span(self, quote, context, errs=100):
+    def _get_span(self, quote, context, errs=5):
         import regex
 
         minor = quote
@@ -41,8 +41,9 @@ class Fact(BaseModel):
 
 class QuestionAnswer(OpenAISchema):
     """
-    Class representing a question and its answer as a list of facts each one should have a soruce.
-    each sentence contains a body and a list of sources."""
+    Class representing a question and its answer as a list of facts each one should have a source. each sentence contains a body and a list of sources.
+    Note: If the question cannot have answers that cite the context, then then it should be left blank.
+    """
 
     question: str = Field(..., description="Question that was asked")
     answer: List[Fact] = Field(
@@ -90,7 +91,7 @@ def ask_ai(question: str, context: str) -> QuestionAnswer:
     return QuestionAnswer.from_response(completion)
 
 
-question = "What the author's last name?"
+question = "Who was the president?"
 context = """
 My name is Jason Liu, and I grew up in Toronto Canada but I was born in China.I went to an arts highschool but in university I studied Computational Mathematics and physics.  As part of coop I worked at many companies including Stitchfix, Facebook.  I also started the Data Science club at the University of Waterloo and I was the president of the club for 2 years.
 """

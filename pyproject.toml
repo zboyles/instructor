@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "openai-function-call"
+name = "instructor"
 version = "0.2.1"
 description = "Helper functions that allow us to improve openai's function_call ergonomics"
 authors = ["Jason <jason@jxnl.co>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "openai_function_call"}]
+packages = [{include = "instructor"}]
 repository = "https://github.com/jxnl/openai_function_call"
 
 [tool.poetry.dependencies]

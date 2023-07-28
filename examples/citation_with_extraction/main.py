@@ -2,7 +2,7 @@ import json
 from typing import Iterable, List
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.params import Depends
-from openai_function_call import MultiTask, OpenAISchema
+from instructor import MultiTask, OpenAISchema
 from pydantic import BaseModel, Field
 from starlette.responses import StreamingResponse
 
@@ -10,7 +10,7 @@ import os
 import openai
 import logging
 
-from openai_function_call.dsl.multitask import MultiTaskBase
+from instructor.dsl.multitask import MultiTaskBase
 
 logger = logging.getLogger(__name__)
 
@@ -59,8 +59,8 @@ class Fact(BaseModel):
 
 class QuestionAnswer(OpenAISchema, MultiTaskBase):
     """
-    Class representing a question and its answer as a list of facts each one should have a soruce.
-    each sentence contains a body and a list of sources."""
+    Class representing a question and its answer as a list of facts each one should have a source each sentence contains a body and a list of sources.
+    """
 
     question: str = Field(..., description="Question that was asked")
     tasks: List[Fact] = Field(
